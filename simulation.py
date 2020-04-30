@@ -18,7 +18,7 @@ cult = Meme(spread=5, color=(0, 204, 0))
 
 society_1 = Society(SCREEN_SIZE / 3, SCREEN_SIZE / 2)
 society_2 = Society(2 * SCREEN_SIZE/3, SCREEN_SIZE/2)
-
+societies = [society_1, society_2]
 
 people = []
 for _ in range(100):
@@ -45,6 +45,10 @@ while running:
                     # 5 percent change
                     if 5 > random.randint(0, 100):
                         other_person.meme = person.meme
+
+        for society in societies:
+            if society is not person.society and society.distance(person.rect.x, person.rect.y) < person.society.distance(person.rect.x, person.rect.y):
+                person.society = society
 
         pygame.draw.rect(screen, person.color(), person.rect)
 
