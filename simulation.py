@@ -13,8 +13,8 @@ pygame.display.set_caption('Memetic Evolution Simulation')
 screen = pygame.display.set_mode((SCREEN_SIZE, SCREEN_SIZE), 0, 32)
 
 
-missionary = Meme(spread=100, color=(51, 153, 255))
-cult = Meme(spread=5, color=(0, 204, 0))
+missionary = Meme(spread=200)
+cult = Meme(spread=50)
 
 society_1 = Society(SCREEN_SIZE / 3, SCREEN_SIZE / 2)
 society_2 = Society(2 * SCREEN_SIZE/3, SCREEN_SIZE/2)
@@ -23,11 +23,13 @@ societies = [society_1, society_2]
 people = []
 for _ in range(100):
     people.append(Person(society=society_1))
-people.append(Person(society=society_1, meme=missionary))
+for _ in range(10):
+    people.append(Person(society=society_1, meme=missionary))
 
 for _ in range(100):
     people.append(Person(society=society_2))
-people.append(Person(society=society_2, meme=cult))
+for _ in range(10):
+    people.append(Person(society=society_2, meme=cult))
 
 
 running = True
@@ -39,16 +41,22 @@ while running:
     for person in people:
         person.move()
 
+        print(person.color())
+
         if person.meme:
             for other_person in people:
                 if person.rect.colliderect(other_person.rect):
-                    # 5 percent change
-                    if 5 > random.randint(0, 100):
+                    # 5 percent chance of migration
+                    if 10 > random.randint(0, 100):
                         other_person.meme = person.meme
 
+        # migration
         for society in societies:
             if society is not person.society and society.distance(person.rect.x, person.rect.y) < person.society.distance(person.rect.x, person.rect.y):
                 person.society = society
+
+        if person.meme:
+            person.meme = person.meme.mutate()
 
         pygame.draw.rect(screen, person.color(), person.rect)
 

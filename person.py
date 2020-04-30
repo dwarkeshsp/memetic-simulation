@@ -42,4 +42,4 @@ class Person:
         return self.meme.spread if self.meme else 50
 
     def color(self):
-        return self.meme.color if self.meme else (255, 255, 255)
+        return self.meme.color() if self.meme else (255, 255, 255)
