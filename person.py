@@ -3,10 +3,9 @@ import pygame
 
 
 class Person:
-    def __init__(self, root_x, root_y, meme):
+    def __init__(self, society, meme):
 
-        self.root_x = root_x
-        self.root_y = root_y
+        self.society = society
         self.meme = meme
         self.dx = 0
         self.dy = 0
@@ -15,8 +14,8 @@ class Person:
             return random.randint(0, 100) - 50 + root
 
         self.rect = pygame.Rect(0, 0, 5, 5)
-        self.rect.center = (random_location(root_x),
-                            random_location(root_y))
+        self.rect.center = (random_location(society.x),
+                            random_location(society.y))
 
     def move(self):
 
@@ -32,8 +31,8 @@ class Person:
                 gravity *= -1
             return gravity
 
-        self.dx += random_speed() + gravity(self.root_x,  self.rect.x)
-        self.dy += random_speed() + gravity(self.root_y, self.rect.y)
+        self.dx += random_speed() + gravity(self.society.x,  self.rect.x)
+        self.dy += random_speed() + gravity(self.society.y, self.rect.y)
 
         DECELERATION = 0.99
         self.dx *= DECELERATION

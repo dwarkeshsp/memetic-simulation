@@ -3,14 +3,17 @@ import random
 import matplotlib.pyplot as plt
 from person import Person
 from meme import Meme
+from society import Society
 
 SCREEN_SIZE = 1000
 
 
-dynamism = Meme('dynamism', spread=100, color=(255, 255, 255))
+dynamism = Meme(spread=100, color=(255, 255, 255))
+society_1 = Society(x=SCREEN_SIZE/2, y=SCREEN_SIZE/2)
+
 people = []
 for _ in range(1):
-    people.append(Person(SCREEN_SIZE / 2, SCREEN_SIZE / 2, dynamism))
+    people.append(Person(society=society_1, meme=dynamism))
 
 clock = pygame.time.Clock()
 pygame.init()
