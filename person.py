@@ -3,7 +3,7 @@ import pygame
 
 
 class Person:
-    def __init__(self, society, meme):
+    def __init__(self, society, meme=None):
 
         self.society = society
         self.meme = meme
@@ -26,7 +26,7 @@ class Person:
             return random.randint(0, 20) / 10 - 1
 
         def gravity(root, n):
-            gravity = (root - n) ** 2 / (self.meme.spread * 1000)
+            gravity = (root - n) ** 2 / (self.spread() * 1000)
             if n > root:
                 gravity *= -1
             return gravity
@@ -38,5 +38,8 @@ class Person:
         self.dx *= DECELERATION
         self.dy *= DECELERATION
 
+    def spread(self):
+        return self.meme.spread if self.meme else 50
+
     def color(self):
-        return self.meme.color
+        return self.meme.color if self.meme else (255, 255, 255)
