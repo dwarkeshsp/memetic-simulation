@@ -6,5 +6,5 @@ class Society:
         self.x = x
         self.y = y
 
-    def distance(self, x, y):
-        return math.sqrt((self.x - x) ** 2 + (self.y - y) ** 2)
+    def distance(self, person):
+        return math.sqrt((self.x - person.rect.x) ** 2 + (self.y - person.rect.y) ** 2)

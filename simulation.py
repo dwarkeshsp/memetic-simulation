@@ -14,7 +14,7 @@ screen = pygame.display.set_mode((SCREEN_SIZE, SCREEN_SIZE), 0, 32)
 
 
 missionary = Meme(spread=200)
-cult = Meme(spread=50)
+cult = Meme(spread=5)
 
 society_1 = Society(SCREEN_SIZE / 3, SCREEN_SIZE / 2)
 society_2 = Society(2 * SCREEN_SIZE/3, SCREEN_SIZE/2)
@@ -41,22 +41,20 @@ while running:
     for person in people:
         person.move()
 
-        print(person.color())
-
         if person.meme:
             for other_person in people:
                 if person.rect.colliderect(other_person.rect):
                     # 5 percent chance of migration
                     if 10 > random.randint(0, 100):
-                        other_person.meme = person.meme
+                        other_person.meme = person.meme.mutate()
 
         # migration
         for society in societies:
-            if society is not person.society and society.distance(person.rect.x, person.rect.y) < person.society.distance(person.rect.x, person.rect.y):
+            if society.distance(person) < person.society.distance(person):
                 person.society = society
 
-        if person.meme:
-            person.meme = person.meme.mutate()
+        # if person.meme:
+        #     person.meme = person.meme.mutate()
 
         pygame.draw.rect(screen, person.color(), person.rect)
 
